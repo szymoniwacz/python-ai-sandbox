@@ -228,4 +228,5 @@ m.solve()
 print("States Explored:", m.num_explored)
 print("Solution:")
 m.print()
-m.output_image("maze.png", show_explored=True)
+maze_name = sys.argv[1].split(".")[0]
+m.output_image(f"{maze_name}.png", show_explored=True)
