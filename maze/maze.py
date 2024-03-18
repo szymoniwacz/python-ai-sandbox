@@ -221,7 +221,7 @@ m = Maze(sys.argv[1])
 print("Maze:")
 m.print()
 print("Solving...")
-frontier_class = StackFrontier
+frontier_class = QueueFrontier
 m.solve(frontier_class)
 print("States Explored:", m.num_explored)
 print("Solution:")
