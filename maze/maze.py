@@ -1,46 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import sys
+sys.path.append("..")
 
-
-class Node():
-    def __init__(self, state, parent, action):
-        self.state = state
-        self.parent = parent
-        self.action = action
-
-
-class StackFrontier():
-    def __init__(self):
-        self.frontier = []
-
-    def add(self, node):
-        self.frontier.append(node)
-
-    def contains_state(self, state):
-        return any(node.state == state for node in self.frontier)
-
-    def empty(self):
-        return len(self.frontier) == 0
-
-    def remove(self):
-        if self.empty():
-            raise Exception("empty frontier")
-
-        node = self.frontier[-1]
-        self.frontier = self.frontier[:-1]
-        return node
-
-
-class QueueFrontier(StackFrontier):
-    def remove(self):
-        if self.empty():
-            raise Exception("empty frontier")
-        
-        node = self.frontier[0]
-        self.frontier = self.frontier[1:]
-        return node
-
+from shared import Node, StackFrontier, QueueFrontier
 
 class Maze():
     def __init__(self, filename):
@@ -227,4 +190,5 @@ print("States Explored:", m.num_explored)
 print("Solution:")
 m.print()
 maze_name = sys.argv[1].split(".")[0]
-m.output_image(f"{frontier_class.__name__}_{maze_name}.png", show_explored=True)
+m.output_image(f"{frontier_class.__name__}_{maze_name}.png",
+               show_explored=True)
