@@ -92,9 +92,43 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
+    
+    # Initialize frontier to just the starting position
+    frontier = StackFrontier()
+    start_node = Node(state=source, parent=None, action=None)
+    frontier.add(start_node)
 
-    # TODO
-    raise NotImplementedError
+    # Initialize visited set to keep track of visited nodes
+    visited = set()
+
+    # Perform
+    while not frontier.empty():
+        current_node = frontier.remove()
+        current_id = current_node.state
+
+        if current_id == target:
+            # If target is found, construct and return the path
+            path = []
+            while current_node.parent is not None:
+                path.append((current_node.action[0], current_node.state))
+                current_node = current_node.parent
+            path.reverse()  # Reverse to get the correct order
+            return path
+
+        # Add current node to visited set
+        visited.add(current_id)
+
+        # Iterate through movies starring the current person
+        for movie_id in people[current_id]['movies']:
+            # Iterate through stars in the current movie
+            for star_id in movies[movie_id]['stars']:
+                if star_id not in visited:
+                    # Create a new node for the star and add it to the frontier
+                    new_node = Node(state=star_id, parent=current_node, action=(movie_id, star_id))
+                    frontier.add(new_node)
+
+    # If no path found, return None
+    return None
 
 
 def person_id_for_name(name):
